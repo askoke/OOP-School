@@ -1,4 +1,4 @@
-class Person {
+const Person = class {
 	constructor(name) {
 		this.name = name
 	}
@@ -19,4 +19,4 @@ class Person {
 	}
 }
 
-module.exports = {Person}
+module.exports = Person

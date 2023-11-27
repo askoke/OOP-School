@@ -1,52 +1,50 @@
 class School{
-    constructor(name) {
+    constructor(name){
         this.name = name
-        this.courses = []
         this.students = []
+        this.courses = []
     }
-    addCourse(course) {
-        if(this.courses.includes(course)) {
-            return
-        } else {
+    getName(){
+        return this.name
+    }
+    addCourse(course){
+        if(this.courses.indexOf(course) === -1){
             this.courses.push(course)
-        }  
+        }
     }
-    addStudent(student) {
-        if(this.students.includes(student)) {
-            return
-        } else {
-            let id = Math.floor(Math.random() * 100) + 1
-            while(this.students.some(student => student.getId() == id)) {
-                id = Math.floor(Math.random() * 100) + 1
+    addStudent(student){
+        if(student.age() >= 15){
+            if(this.students.indexOf(student) === -1){
+                let id = Math.random().toString()
+                student.setId(id)
+                this.students.push(student)
             }
-            student.setId(id)
-            this.students.push(student)
         }
     }
-    addStudentGrade(student, course, grade) {
-        if (this.students.includes(student) && this.courses.includes(course)) {
-            student.addGrade([course, grade])
-            course.addGrade([student, grade]) 
+    addStudentGrade(student, course, grade){
+        if(this.students.indexOf(student) !== -1 && this.courses.indexOf(course) !== -1){
+            student.addGrade(course, grade)
+            course.addGrade(student, grade)
         }
     }
-    getStudents() {
+    getGrades(){
+        return this.grades
+    }
+    getStudents(){
         return this.students
     }
-
-    getCourses() {
+    getCourses(){
         return this.courses
     }
-
-    getStudentsOrderedByAverageGrade() {
-        for(let i = 0; i <= this.students.length - 1; i ++) {
-            if(this.students[i].getAverageGrade() < this.students[i + 1].getAverageGrade()) {
-                let help = this.students[i]
-                this.students[i] = this.students[i + 1]
-                this.students[i + 1] = help
-            }
-        return this.students
-        }
+    getStudentsOrderedByAverageGrade(){
+        let sortedStudents = this.students.sort(
+    (s1, s2) => (s1.getAverageGrade() < s2.getAverageGrade()) ? 1 : (s1.getAverageGrade() > s2.getAverageGrade()) ? -1 : 0);
+        return sortedStudents
     }
+    description(){
+        return `School name ${this.getName()}.`
+    }
+
 }
 
-module.exports = {School}
+module.exports = School

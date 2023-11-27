@@ -1,37 +1,41 @@
-const {Person} = require('./Person')
+const Person = require('./Person')
 
 class Student extends Person{
-    constructor(name) {
+    constructor(name){
         super(name)
-        this.name = name
-        this.id = null
         this.grades = []
+        this.id = null
     }
-    setId(id) {
-        if(this.id === null) {
+    setId(id){
+        if(this.id === null){
             this.id = id
         }
     }
-    getId() {
+    getId(){
         return this.id
     }
-    getGrades() {
+    getGrades(){
         return this.grades
     }
-    addGrade(grade) {
-        this.grades.push(grade)
+    addGrade(course, grade){
+        this.grades.push({
+            course: course.getName(),
+            grade: grade
+        })
     }
-    getAverageGrade(grade) {
-        let average = -1;
-        if (this.grades.length > 0) {
-            const total = this.grades.reduce((sum, grade) => sum + grade[1], 0);
-            average = total / this.grades.length;
+    getAverageGrade(){
+        if(this.grades.length === 0){
+            return -1
+        } else if(this.grades.length === 1) {
+            return this.grades[0].grade
+        } else {
+            return this.grades.reduce((a, b) => a.grade + b.grade)/this.grades.length
         }
-        return average;
     }
-    description() {
-        return `${this.name}`
+    description(){
+        return `Created student with name ${this.getName()}, ${this.age()} years old, with id=${this.id} and grades are ${this.getGrades()} with average grade ${this.getAverageGrade()}.`
     }
+
 }
 
-module.exports = {Student}
+module.exports = Student

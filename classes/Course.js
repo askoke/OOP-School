@@ -1,25 +1,35 @@
 class Course{
-    constructor(name) {
+    constructor(name){
         this.name = name
         this.grades = []
-	}
-    addGrade(grade) {
-        this.grades.push(grade)
     }
-    getGrades() {
+    getName(){
+        return this.name
+    }
+    getGrades(){
         return this.grades
     }
-    getAverageGrade(grade) {
-        let average = -1;
-        if (this.grades.length > 0) {
-            const total = this.grades.reduce((sum, grade) => sum + grade[1], 0);
-            average = total / this.grades.length;
+    addGrade(student, grade){
+        this.grades.push({
+            student: student.getName(),
+            grade: grade
+        })
+    }
+    getAverageGrade(){
+        if(this.grades.length === 0){
+            return -1
+        } else {
+            let sum = 0
+            this.grades.forEach((grade) => {
+                sum += grade.grade
+            })
+            return sum / this.grades.length
         }
-        return average;
     }
-    description() {
-        return `${this.name}`
+    description(){
+        return `Course name ${this.getName()}.`
     }
+
 }
 
-module.exports = {Course}
+module.exports = Course
